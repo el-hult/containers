@@ -5,11 +5,12 @@ From: nvcr.io/nvidia/jax:24.10-py3
     test_jax.py
     test_pymc.py
     test_numpyro.py
+    test_xgb.py
 
 %post
     export PIP_TMP=/tmp/pip-cache
     mkdir -p $PIP_TMP
-    pip install --cache-dir $PIP_TMP pymc numpyro pandas numpy scipy polars openpyxl pyarrow imageio seaborn tqdm relplot xlsxwriter 
+    pip install --cache-dir $PIP_TMP xgboost pymc numpyro pandas numpy scipy polars openpyxl pyarrow imageio seaborn tqdm relplot xlsxwriter 
 
 %test
     # pytensor and matplotlib need work folders
@@ -17,6 +18,13 @@ From: nvcr.io/nvidia/jax:24.10-py3
     # we'll use these instead
     export PYTENSOR_FLAGS='base_compiledir=/tmp/.pytensor' 
     export MPLCONFIGDIR=/tmp/matplotlib-123
+    mkdir -p $MPLCONFIGDIR
+
     python /test_jax.py
     python /test_pymc.py
     python /test_numpyro.py
+    python /test_xgb.py
+
+    # clean up. may otherwise cause issues on subsequent runs
+    rm -rf $MPLCONFIGDIR
+    rm -rf /tmp/.pytensor

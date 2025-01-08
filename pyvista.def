@@ -15,7 +15,7 @@ From: nvcr.io/nvidia/jax:24.10-py3
 
     export PIP_TMP=/tmp/pip-cache
     mkdir -p $PIP_TMP
-    pip install --cache-dir $PIP_TMP xgboost pyvista pymc numpyro pandas numpy scipy polars openpyxl pyarrow imageio seaborn tqdm relplot xlsxwriter upsetplot
+    pip install --cache-dir $PIP_TMP xgboost pyvista pymc numpyro pandas numpy scipy polars openpyxl pyarrow imageio seaborn tqdm relplot xlsxwriter upsetplot fastexcel
 
 %test
     # pytensor and matplotlib need work folders

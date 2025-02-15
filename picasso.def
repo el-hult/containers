@@ -1,0 +1,18 @@
+Bootstrap: docker
+From: nvcr.io/nvidia/jax:25.01-py3
+
+%post
+    export DEBIAN_FRONTEND=noninteractive
+    apt-get update && \
+    apt-get install -y xvfb libgl1-mesa-dev
+
+    export PIP_TMP=/tmp/pip-cache
+    mkdir -p $PIP_TMP
+    pip install --cache-dir $PIP_TMP \
+	xgboost pyvista \
+	pandas numpy scipy polars openpyxl pyarrow \
+	imageio seaborn tqdm relplot xlsxwriter upsetplot fastexcel "scikit-learn<1.6" \
+        pydot networkx \
+	transformers einops timm "accelerate>=0.26.0" \
+	relplot
+

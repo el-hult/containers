@@ -2,9 +2,40 @@ Bootstrap: docker
 From: nvcr.io/nvidia/jax:25.01-py3
 
 %post
+
+# VTK installation dependencies
     export DEBIAN_FRONTEND=noninteractive
     apt-get update && \
-    apt-get install -y xvfb libgl1-mesa-dev
+    	apt-get install -y ninja-build cmake libegl1-mesa-dev python3-dev git g++
+
+# building the VTK libl
+	git clone https://github.com/Kitware/VTK
+	mkdir VTK/build
+	cd /VTK/build
+	git checkout v9.3.0
+	cmake -GNinja \
+	  -DCMAKE_BUILD_TYPE=Release \
+	  -DVTK_BUILD_TESTING=OFF \
+	  -DVTK_BUILD_DOCUMENTATION=OFF \
+	  -DVTK_BUILD_EXAMPLES=OFF \
+	  -DVTK_MODULE_ENABLE_VTK_PythonInterpreter:STRING=NO \
+	  -DVTK_MODULE_ENABLE_VTK_WebCore:STRING=YES \
+	  -DVTK_MODULE_ENABLE_VTK_WebGLExporter:STRING=YES \
+	  -DVTK_MODULE_ENABLE_VTK_WebPython:STRING=YES \
+	  -DVTK_WHEEL_BUILD=ON \
+	  -DVTK_PYTHON_VERSION=3 \
+	  -DVTK_WRAP_PYTHON=ON \
+	  -DVTK_OPENGL_HAS_EGL:BOOL=ON \
+	  -DVTK_USE_X:BOOL=OFF \
+	  -DVTK_USE_COCOA:BOOL=OFF \
+	  -DVTK_DEFAULT_RENDER_WINDOW_HEADLESS:BOOL=ON \
+	  -DPython3_EXECUTABLE=/usr/bin/python3 ../
+	ninja
+# install the VTK wheel
+pip install wheel setuptools
+python setup.py bdist_wheel
+pip install dist/vtk-*.whl
+
 
     export PIP_TMP=/tmp/pip-cache
     mkdir -p $PIP_TMP

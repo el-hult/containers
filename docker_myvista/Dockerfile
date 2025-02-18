@@ -37,7 +37,7 @@ RUN $PYTHON setup.py bdist_wheel
 RUN $PYTHON -m pip install dist/vtk-*.whl
 
 # install pyvista
-RUN $PYTHON -m pip install pyvista[all3]
+RUN $PYTHON -m pip install pyvista
 
 # setting variables for the user later on
 ENV PYVISTA_OFF_SCREEN=true

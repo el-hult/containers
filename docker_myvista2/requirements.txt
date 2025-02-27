@@ -15,14 +15,16 @@ scipy
 seaborn
 tqdm
 relplot
-xlsxwriter
 
-# IO of normal formats
+# IO and dataframes for some formats
 polars
 pandas
 openpyxl
 fastexcel
+xlsxwriter
 pyarrow
+datasets
+Pillow
 
 # graph of snomed notology
 pydot

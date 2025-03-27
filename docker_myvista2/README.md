@@ -22,9 +22,9 @@ python /work/test_transformers.py
 
 # Building and testing singularity
 
-## ALT 1 convert on host/build server
+## Alt 1 convert on host/build server
 
-this took ca 8 hours to run...
+This took ca 8 hours to run in one run. In another run it just crashed out-of-memory.
 
 ```bash
 singularity build $SIF docker-daemon:$IMG
@@ -34,15 +34,28 @@ rsync --progress --human-readable $SIF elhult@transit.uppmax.uu.se:sens2020598
 ```
 
 ## Alt 2 convert on bianca
-(on the build host)
+On the build host, if sending from mitevs build server
 ```
 date ; docker save --output $TAR $IMG ; date
 rsync --progress --human-readable --compress $SIF            elhult@transit.uppmax.uu.se:sens2020598
 rsync --progress --human-readable --compress test_pyvista.py elhult@transit.uppmax.uu.se:sens2020598
 ```
-(ssh into to bianca)
+It took very long time (many hours? i didnt record the time) if doing it on the build server.
+
+The `docker save` took 8 minutes if I built the docker image on my old windows laptop. That is very much better, but on the other hand I don't have a GPU there to test the image on.
+I could not also not use rsync from wsl2, since cisco has messed up the VPN See more on https://gist.github.com/pyther/b7c03579a5ea55fe431561b502ec1ba8 So I used replaced the rsync call in WSL with sftp from powershell instead. cd into the correct folder and run
+ ```powershell
+ echo "put mytorchvista.tar" | sftp elhult-sens2020598@bianca-sftp.uppmax.uu.se:/elhult-sens2020598
+ ```
+this transfer took an hour or so.
+
+Finally, we want to do the conversion to singularity on bianca. ssh into to bianca and continue there.
 ```bash
-cd /proj/nobackup/sens2020598/wharf/elhult/elhult-sens2020598/
-singularity build $SIF docker-archive:$TAR
+salloc --qos interact -n 16 -t 12:00:00 -A sens2020598 --no-shell
+# get some allocation, on e.g. bianca-b4
+ssh b4 # shortcut that expands and sends me right
+cd /proj/nobackup/sens2020598/wharf/elhult/elhult-sens2020598/ # landing site in wharf for the transfer
+singularity build $SIF docker-archive://$TAR
 singularity exec --nv $SIF python test_pyvista.py
 ```
+building takes an hour or so when using 16 cores

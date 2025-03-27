@@ -16,3 +16,4 @@ plotter.screenshot(output_path)
 if plotter.render_window is not None:
     print(plotter.render_window.ReportCapabilities())
 
+print(pv.Report())

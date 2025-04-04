@@ -38,3 +38,7 @@ accelerate>=0.26.0
 # the base line model to compare with
 xgboost
 scikit-learn<1.6 # I dont rememeber why I need to pin at <1.6
+
+# deep learning training stuff
+lightning
+tensorboard

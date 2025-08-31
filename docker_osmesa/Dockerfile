@@ -9,6 +9,11 @@ RUN $PYTHON -m pip install pyvista
 RUN --mount=type=bind,source=requirements.txt,target=/tmp/requirements.txt \
   $PYTHON -m pip install --no-cache-dir --requirement /tmp/requirements.txt 
 
+#
+# This section was relevant for vtk<9.4
+# check if you can use a newer vtk version, and you can skip many manual steps
+# it should even ship with EGL, so all should just work better than before
+#
 # replace VTK with VTK-osmesa instead
 # as they do in https://github.com/pyvista/pyvista/blob/main/docker/jupyter.Dockerfile
 RUN $PYTHON -m pip uninstall vtk -y

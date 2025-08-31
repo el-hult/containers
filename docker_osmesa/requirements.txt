@@ -15,6 +15,8 @@ scipy
 matplotlib
 seaborn
 tqdm
+joblib # caching work steps
+Plotly
 
 # IO of normal formats
 polars
@@ -25,7 +27,7 @@ fastexcel
 pyarrow
 datasets
 
-# graph of snomed notology
+# graph of snomed ontology
 pydot
 networkx
 
@@ -39,6 +41,11 @@ accelerate>=0.26.0
 xgboost
 scikit-learn<1.6 # I dont rememeber why I need to pin at <1.6
 
-# deep learning training stuff
+# other deep learning stuff
 lightning
 tensorboard
+
+# things for GNN training
+torchmetrics
+torch_geometric
+torch-cluster

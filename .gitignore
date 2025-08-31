@@ -1,1 +1,4 @@
 *.sif
+
+# macOS
+.DS_Store

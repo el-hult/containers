@@ -5,7 +5,9 @@
 # image rendering
 pyvista
 imageio
+pillow     # PIL image formats
 
+#
 upsetplot # UpSet plots for multiple reported sympotms
 relplot   # smECE computations
 
@@ -25,25 +27,27 @@ pandas
 openpyxl
 fastexcel
 pyarrow
-datasets
+datasets   # huggingface datasets
 
-# graph of snomed ontology
+# To integrate with the logistic regression outputs of Nicolas
+arviz
+patsy
+
+# graph rendering
 pydot
 networkx
 
-# the deep learning stuff for InternVL
+# Deep Learning
 transformers
 einops
 timm
-accelerate>=0.26.0
+accelerate>=0.26.0 # InternVL needed this for some reason
+lightning
+tensorboard
 
 # the base line model to compare with
 xgboost
 scikit-learn<1.6 # I dont rememeber why I need to pin at <1.6
-
-# other deep learning stuff
-lightning
-tensorboard
 
 # things for GNN training
 torchmetrics

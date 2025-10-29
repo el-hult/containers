@@ -1,6 +1,0 @@
-#!/bin/sh
-rsync \
-	--progress \
-	--human-readable \
-	picasso.sif \
-	elhult@transit.uppmax.uu.se:sens2020598

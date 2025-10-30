@@ -10,8 +10,10 @@ RUN apt update && apt install --assume-yes --no-install-recommends libx11-dev li
 # install python dependencies
 # N.B. check https://docs.docker.com/build/building/best-practices/#add-or-copy
 # it suggests bind mounts instead o add/copy for a requirements file
-RUN --mount=type=bind,source=requirements.txt,target=/tmp/requirements.txt \
-  $PYTHON -m pip install --no-cache-dir --requirement /tmp/requirements.txt 
+RUN \
+  --mount=type=bind,source=requirements.txt,target=/tmp/requirements.txt \
+  --mount=type=cache,id=pip-cache,target=/root/.cache/pip
+  $PYTHON -m pip install --requirement /tmp/requirements.txt 
 
 # setting variables for the user later on
 ENV PYVISTA_OFF_SCREEN=true

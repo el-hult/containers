@@ -1,9 +1,10 @@
 #
-# requirements to install on top of the base Nvidia Pytorch image, and the pyvista with VTK installed manually
+# requirements to install on top of the base Nvidia Pytorch image
 #
 
 # image rendering
 pyvista
+vtk>=9.5
 imageio
 pillow     # PIL image formats
 

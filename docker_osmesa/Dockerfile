@@ -12,7 +12,7 @@ RUN apt update && apt install --assume-yes --no-install-recommends libx11-dev li
 # it suggests bind mounts instead o add/copy for a requirements file
 RUN \
   --mount=type=bind,source=requirements.txt,target=/tmp/requirements.txt \
-  --mount=type=cache,id=pip-cache,target=/root/.cache/pip
+  --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
   $PYTHON -m pip install --requirement /tmp/requirements.txt 
 
 # setting variables for the user later on
